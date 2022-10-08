@@ -36,7 +36,7 @@ end
 # Production
 ########################################
 
-inject_into_file "config/deploy/production.rb", after: "# server "db.example.com", user: "deploy", roles: %w{db}" do
+inject_into_file "config/deploy/production.rb", after: '# server "db.example.com", user: "deploy", roles: %w{db}' do
   <<~RUBY
     server '37.187.119.17', user: 'ouic', roles: %w{app db web}
   RUBY
@@ -58,7 +58,7 @@ inject_into_file "config/deploy.rb", before: "# Optionally, you can symlink your
   RUBY
 end
 
-inject_into_file "Capfile", after: "# require "capistrano/passenger"" do
+inject_into_file "Capfile", after: '# require "capistrano/passenger"' do
   <<~RUBY
     # Load custom tasks from `lib/capistrano/tasks` if you have any defined
     Dir.glob("lib/capistrano/tasks/*.rake").each { |r| import r }
