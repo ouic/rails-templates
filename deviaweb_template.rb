@@ -119,6 +119,12 @@ after_bundle do
   generate("devise:install")
   generate("devise", "User", "pseudo", "prenom", "nom", "phone_number", "birth_date", "gender", "ip_address", "admin:boolean")
 
+  # set admin boolean to false by default
+  in_root do
+    migration = Dir.glob("db/migrate/*").max_by{ |f| File.mtime(f) }
+    gsub_file migration, /:admin/, ":admin, default: false"
+  end
+
   # Application controller
   ########################################
   run "rm app/controllers/application_controller.rb"
