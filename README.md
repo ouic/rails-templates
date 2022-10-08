@@ -1,30 +1,14 @@
 # Rails Templates
 
-Quickly generate a rails app with the default [Wagon](https://www.lewagon.com) configuration
+Quickly generate a rails app with the default [Deviaweb](https://www.deviaweb.fr) configuration
 using [Rails Templates](http://guides.rubyonrails.org/rails_application_templates.html).
 
-?? The following templates have been made for Rails 7. If you use Rails 6, please refer to the [`no-update` branch templates](https://github.com/lewagon/rails-templates/tree/no-update)
-
-## Minimal
-
-Get a minimal rails app ready to be deployed on Heroku with Bootstrap, Simple form and debugging gems.
-
-```bash
-rails new \
-  -d postgresql \
-  -j webpack \
-  -m https://raw.githubusercontent.com/lewagon/rails-templates/master/minimal.rb \
-  CHANGE_THIS_TO_YOUR_RAILS_APP_NAME
-```
+?? The following templates have been made for Rails 7.
 
 ## Devise
 
-Same as minimal **plus** a Devise install with a generated `User` model.
+Devise install with a generated `User` model.
 
 ```bash
-rails new \
-  -d postgresql \
-  -j webpack \
-  -m https://raw.githubusercontent.com/lewagon/rails-templates/master/devise.rb \
-  CHANGE_THIS_TO_YOUR_RAILS_APP_NAME
+rails new CHANGE_TO_APP_NAME -d postgresql -j webpack -m https://raw.githubusercontent.com/ouic/rails-templates/master/deviaweb_template.rb
 ```
