@@ -117,7 +117,7 @@ after_bundle do
   # Devise install + user
   ########################################
   generate("devise:install")
-  generate("devise", "User", "pseudo", "prenom", "nom", "phone_number", "birth_date", "gender", "ip_address", "admin:boolean")
+  generate("devise", "User", "nickname", "first_name", "last_name", "phone_number", "birth_date", "gender", "ip_address", "admin:boolean")
 
   # set admin boolean to false by default
   in_root do
