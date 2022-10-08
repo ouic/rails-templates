@@ -7,6 +7,8 @@ inject_into_file "Gemfile", before: "group :development, :test do" do
     gem "devise"
     gem "autoprefixer-rails"
     gem "font-awesome-sass", "~> 6.1"
+    gem "image_processing", "~> 1.2"
+
   RUBY
 end
 
@@ -115,7 +117,7 @@ after_bundle do
   # Devise install + user
   ########################################
   generate("devise:install")
-  generate("devise", "User")
+  generate("devise", "User", "pseudo", "prenom", "nom", "phone_number", "birth_date", "gender", "ip_address", "admin:boolean")
 
   # Application controller
   ########################################
