@@ -125,6 +125,13 @@ after_bundle do
     gsub_file migration, /:admin/, ":admin, default: false"
   end
 
+  # config navigational_formats
+  inject_into_file "config/initializers/devise.rb", after: "# config.navigational_formats = ['*/*', :html]" do
+    <<-RUBY
+      config.navigational_formats = ['*/*', :html, :turbo_stream]
+    RUBY
+  end
+
   # Application controller
   ########################################
   run "rm app/controllers/application_controller.rb"
