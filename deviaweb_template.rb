@@ -35,6 +35,15 @@ inject_into_file "config/initializers/assets.rb", before: "# Precompile addition
   RUBY
 end
 
+inject_into_file "config/initializers/assets.rb", after: "# Rails.application.config.assets.precompile += %w( admin.js admin.css )" do
+  <<~RUBY
+        
+
+    # Custom fonts
+    Rails.application.config.assets.paths << Rails.root.join('app', 'assets', 'fonts')
+  RUBY
+end
+
 # Layout
 ########################################
 
@@ -142,12 +151,13 @@ file "app/views/shared/_navbar.html.erb", <<~HTML
         <ul class="navbar-nav me-auto">
           <% if user_signed_in? %>
             <li class="nav-item active">
-              <%= link_to "Menu", menu_path, class: "btn-navbar" %>
+              <%= link_to "Profile", user_registration_path, class: "btn-navbar" %>
             </li>
             <li class="nav-item dropdown">
               <%= image_tag "https://raw.githubusercontent.com/ouic/fullstack-images/master/uikit/profile_picture.png", class: "avatar-bordered dropdown-toggle", id: "navbarDropdown", data: { bs_toggle: "dropdown" }, 'aria-haspopup': true, 'aria-expanded': false %>
               <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                 <%= link_to "Menu", menu_path, class: "dropdown-item" %>
+                <%= link_to "Profile", user_registration_path, class: "dropdown-item" %>
                 <%= link_to "Déconnexion", destroy_user_session_path, data: {turbo_method: :delete}, class: "dropdown-item" %>
               </div>
             </li>
@@ -162,8 +172,6 @@ file "app/views/shared/_navbar.html.erb", <<~HTML
     </div>
   </div>
 HTML
-
-
 
 # Home page
 ########################################
@@ -263,6 +271,7 @@ after_bundle do
   # Routes
   ########################################
   route 'root to: "pages#home"'
+  route 'resources :users'
   route 'get "/menu" => "pages#menu"'
 
   # Gitignore
@@ -300,6 +309,7 @@ after_bundle do
   # config navigational_formats
   inject_into_file "config/initializers/devise.rb", after: "# config.navigational_formats = ['*/*', :html]" do
     <<-RUBY
+      
       config.navigational_formats = ['*/*', :html, :turbo_stream]
     RUBY
   end
