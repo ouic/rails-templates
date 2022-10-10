@@ -118,6 +118,8 @@ after_bundle do
   ########################################
   generate("devise:install")
   generate("devise", "User", "nickname", "first_name", "last_name", "phone_number", "birth_date:date", "gender", "ip_address", "admin:boolean")
+
+  # generate("devise", "User", "nickname", "first_name", "last_name", "phone_number", "birth_date:date", "gender", "ip_address", "admin:boolean")
   # (à tester) rails g scaffold_controller User email nickname first_name last_name phone_number birth_date:date gender ip_address admin:boolean
   # then uncomment trackable lines
 
@@ -126,6 +128,8 @@ after_bundle do
     migration = Dir.glob("db/migrate/*").max_by{ |f| File.mtime(f) }
     gsub_file migration, /:admin/, ":admin, default: false"
   end
+
+  generate("scaffold_controller", "User", "email", "nickname", "first_name", "last_name", "phone_number", "birth_date:date", "gender", "ip_address", "admin:boolean")
 
   # config navigational_formats
   inject_into_file "config/initializers/devise.rb", after: "# config.navigational_formats = ['*/*', :html]" do
