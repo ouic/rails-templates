@@ -65,7 +65,7 @@ file "app/views/layouts/application.html.erb", <<~HTML
       <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
 
       <!-- favicon -->
-      <%= favicon_link_tag asset_path('https://raw.githubusercontent.com/ouic/fullstack-images/master/uikit/deviaweb_logo_et_fond.png') %>
+      <%= favicon_link_tag asset_path('https://raw.githubusercontent.com/ouic/fullstack-images/master/uikit/logo.png') %>
 
       <!-- compatibilité microsoft Edge -->
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -129,7 +129,7 @@ file "app/views/shared/_navbar.html.erb", <<~HTML
     <div class="container-fluid">
       <div class="logo">
         <%= link_to root_path, class: "navbar-brand" do %>
-          <%= image_tag "logo.png", class: "logo" %>
+          <%= image_tag "https://raw.githubusercontent.com/ouic/fullstack-images/master/uikit/logo.png", class: "logo" %>
           <h1>Dev<br>ia<br>web</h1>
         <% end %>
       </div>
@@ -145,7 +145,7 @@ file "app/views/shared/_navbar.html.erb", <<~HTML
               <%= link_to "Menu", menu_path, class: "btn-navbar" %>
             </li>
             <li class="nav-item dropdown">
-              <%= image_tag "profile_picture.png", class: "avatar-bordered dropdown-toggle", id: "navbarDropdown", data: { bs_toggle: "dropdown" }, 'aria-haspopup': true, 'aria-expanded': false %>
+              <%= image_tag "https://raw.githubusercontent.com/ouic/fullstack-images/master/uikit/profile_picture.png", class: "avatar-bordered dropdown-toggle", id: "navbarDropdown", data: { bs_toggle: "dropdown" }, 'aria-haspopup': true, 'aria-expanded': false %>
               <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                 <%= link_to "Menu", menu_path, class: "dropdown-item" %>
                 <%= link_to "Déconnexion", destroy_user_session_path, data: {turbo_method: :delete}, class: "dropdown-item" %>
@@ -160,6 +160,27 @@ file "app/views/shared/_navbar.html.erb", <<~HTML
         </ul>
       </div>
     </div>
+  </div>
+HTML
+
+
+
+# Home page
+########################################
+file "app/views/pages/menu.html.erb", <<~HTML
+  <div id="wallpaper-gradient">
+
+      <div id="robot" class="col-md-8 col-lg-8">
+        <h1>developpeurs<br><br>intelligence artificielle<br>&<br>applications web</h1>
+        <%# if user_signed_in? %>
+          <%# <p>Bonjour <%= current_user.email</p> %>
+        <%# else %>
+        <%# end %>
+        <%= link_to menu_path do %>
+          <p class="home-button">suivant</p>
+        <% end %>
+      </div>
+
   </div>
 HTML
 
@@ -242,6 +263,7 @@ after_bundle do
   # Routes
   ########################################
   route 'root to: "pages#home"'
+  route 'get "/menu" => "pages#menu"'
 
   # Gitignore
   ########################################
