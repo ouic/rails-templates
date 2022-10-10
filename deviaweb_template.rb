@@ -271,8 +271,31 @@ after_bundle do
   # Routes
   ########################################
   route 'root to: "pages#home"'
-  route 'resources :users'
-  route 'get "/menu" => "pages#menu"'
+
+  run "rm config/routes.rb"
+  file "config/routes.rb", <<~RUBY
+    Rails.application.routes.draw do
+
+      # devise
+      ################################
+      devise_for :users
+      resources :users
+
+      # pages
+      ################################
+      # get "/puzzle" => 'pages#puzzle'
+      get "/menu" => "pages#menu"
+
+      # home
+      ################################
+      root to: "pages#home"
+
+      # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+
+      # Defines the root path route ("/")
+      # root "articles#index"
+    end
+  RUBY
 
   # Gitignore
   ########################################
