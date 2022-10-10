@@ -349,6 +349,31 @@ after_bundle do
     import "bootstrap"
   JS
 
+  append_file "package.json", <<~JSON
+    import "bootstrap"
+  JSON
+
+  # package.json
+  ########################################
+  run "rm package.json"
+  file "package.json", <<~JSON
+    {
+      "name": "deviaweb.fr",
+      "private": "true",
+      "dependencies": {
+        "@hotwired/stimulus": "^3.1.0",
+        "@hotwired/turbo-rails": "^7.2.0",
+        "@popperjs/core": "^2.11.6",
+        "bootstrap": "^5.2.2",
+        "webpack": "^5.74.0",
+        "webpack-cli": "^4.10.0"
+      },
+      "scripts": {
+        "build": "webpack --config webpack.config.js"
+      }
+    }
+  JSON
+
   # Heroku
   ########################################
   run "bundle lock --add-platform x86_64-linux"
