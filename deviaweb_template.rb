@@ -163,7 +163,7 @@ file "app/views/shared/_navbar.html.erb", <<~HTML
 </div>
 HTML
 
-run "yarn build"
+run "bundle install && yarn build"
 
 # package.json
 ########################################
