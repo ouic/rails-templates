@@ -92,10 +92,38 @@ file "app/views/layouts/application.html.erb", <<~HTML
 </html>
 HTML
 
+# Flashes
+########################################
+file "app/views/shared/_flashes.html.erb", <<~HTML
+  <% if notice %>
+    <div class="alert alert-info alert-dismissible fade show m-1" role="alert">
+      <%= notice %>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+      </button>
+    </div>
+  <% end %>
+  <% if alert %>
+    <div class="alert alert-warning alert-dismissible fade show m-1" role="alert">
+      <%= alert %>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+      </button>
+    </div>
+  <% end %>
+HTML
+
+# inject_into_file "app/views/layouts/application.html.erb", after: "<body>" do
+#   <<~HTML
+#     <%= render "shared/navbar" %>
+#     <%= render "shared/flashes" %>
+#   HTML
+# end
+
 # navbar.html.erb
 ########################################
 run "curl -L https://raw.githubusercontent.com/lewagon/awesome-navbars/master/templates/_navbar_wagon.html.erb > app/views/shared/_navbar.html.erb"
+
 run "rm -rf app/views/shared/_navbar.html.erb"
+
 file "app/views/shared/_navbar.html.erb", <<~HTML
 <div class="navbar navbar-expand-sm navbar-light navbar-lewagon">
   <div class="container-fluid">
@@ -135,32 +163,6 @@ file "app/views/shared/_navbar.html.erb", <<~HTML
 </div>
 HTML
 
-# Flashes
-########################################
-file "app/views/shared/_flashes.html.erb", <<~HTML
-  <% if notice %>
-    <div class="alert alert-info alert-dismissible fade show m-1" role="alert">
-      <%= notice %>
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-      </button>
-    </div>
-  <% end %>
-  <% if alert %>
-    <div class="alert alert-warning alert-dismissible fade show m-1" role="alert">
-      <%= alert %>
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-      </button>
-    </div>
-  <% end %>
-HTML
-
-# inject_into_file "app/views/layouts/application.html.erb", after: "<body>" do
-#   <<~HTML
-#     <%= render "shared/navbar" %>
-#     <%= render "shared/flashes" %>
-#   HTML
-# end
-
 # package.json
 ########################################
 gsub_file(
@@ -168,6 +170,7 @@ gsub_file(
   '"name": "app",',
   '"name": "deviaweb.fr",'
 )
+
 inject_into_file "package.json", after: '"webpack-cli": "^4.10.0"' do
   <<~TEXT
   },
