@@ -151,13 +151,17 @@ file "app/views/shared/_navbar.html.erb", <<~HTML
         <ul class="navbar-nav me-auto">
           <% if user_signed_in? %>
             <li class="nav-item active">
-              <%= link_to "Profile", user_registration_path, class: "btn-navbar" %>
+              <%= link_to "Menu", menu_path, class: "btn-navbar" %>
             </li>
+            <% if current_user.admin? %>
+              <li class="nav-item active">
+                <%= link_to "Profile", user_registration_path, class: "btn-navbar" %>
+              </li>
+            <% end %>
             <li class="nav-item dropdown">
               <%= image_tag "https://raw.githubusercontent.com/ouic/fullstack-images/master/uikit/profile_picture.png", class: "avatar-bordered dropdown-toggle", id: "navbarDropdown", data: { bs_toggle: "dropdown" }, 'aria-haspopup': true, 'aria-expanded': false %>
               <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                 <%= link_to "Menu", menu_path, class: "dropdown-item" %>
-                <%= link_to "Profile", user_registration_path, class: "dropdown-item" %>
                 <%= link_to "Déconnexion", destroy_user_session_path, data: {turbo_method: :delete}, class: "dropdown-item" %>
               </div>
             </li>
