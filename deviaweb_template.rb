@@ -118,6 +118,8 @@ after_bundle do
   ########################################
   generate("devise:install")
   generate("devise", "User", "nickname", "first_name", "last_name", "phone_number", "birth_date:date", "gender", "ip_address", "admin:boolean")
+  # (à tester) rails g scaffold_controller User email nickname first_name last_name phone_number birth_date:date gender ip_address admin:boolean
+  # then uncomment trackable lines
 
   # set admin boolean to false by default
   in_root do
