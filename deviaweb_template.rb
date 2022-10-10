@@ -163,25 +163,6 @@ file "app/views/shared/_navbar.html.erb", <<~HTML
 </div>
 HTML
 
-run "bundle install && yarn build"
-
-# package.json
-########################################
-gsub_file(
-  "package.json",
-  '"name": "app",',
-  '"name": "deviaweb.fr",'
-)
-
-inject_into_file "package.json", after: '"webpack-cli": "^4.10.0"' do
-  <<~TEXT
-  },
-  "scripts": {
-    "build": "webpack --config webpack.config.js"
-  }
-  TEXT
-end
-
 # README
 ########################################
 markdown_file_content = <<~MARKDOWN
