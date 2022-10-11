@@ -4,10 +4,29 @@ run "if uname | grep -q 'Darwin'; then pgrep spring | xargs kill -9; fi"
 ########################################
 inject_into_file "Gemfile", before: "group :development, :test do" do
   <<~RUBY
+
     gem "devise"
     gem "autoprefixer-rails"
     gem "font-awesome-sass", "~> 6.1"
-    gem "image_processing", "~> 1.2"
+
+    #________________________________________
+    # Gems added manually
+
+    gem 'capistrano', '~> 3.11'
+    gem 'capistrano-rails', '~> 1.4'
+    gem 'capistrano-passenger', '~> 0.2.0'
+    gem 'capistrano-rbenv', '~> 2.1', '>= 2.1.4'
+    gem 'ed25519', '~> 1.2', '< 1.3'
+    gem 'bcrypt_pbkdf', '~> 1.0', '< 2.0'
+
+    # localisation
+    gem 'geocoder'
+
+    # scraping
+    gem 'open-uri'
+    gem 'nokogiri', '~> 1.6', '>= 1.6.6.2'
+
+    #________________________________________
 
   RUBY
 end
@@ -20,6 +39,7 @@ RUBY
 end
 
 gsub_file("Gemfile", '# gem "sassc-rails"', 'gem "sassc-rails"')
+gsub_file("Gemfile", '# gem "image_processing", "~> 1.2"', 'gem "image_processing", "~> 1.2"')
 
 # Assets
 ########################################
@@ -37,7 +57,7 @@ end
 
 inject_into_file "config/initializers/assets.rb", after: "# Rails.application.config.assets.precompile += %w( admin.js admin.css )" do
   <<~RUBY
-        
+
 
     # Custom fonts
     Rails.application.config.assets.paths << Rails.root.join('app', 'assets', 'fonts')
@@ -155,7 +175,7 @@ file "app/views/shared/_navbar.html.erb", <<~HTML
             </li>
             <% if current_user.admin? %>
               <li class="nav-item active">
-                <%= link_to "Profile", user_registration_path, class: "btn-navbar" %>
+                <%= link_to "Admin", user_registration_path, class: "btn-navbar" %>
               </li>
             <% end %>
             <li class="nav-item dropdown">
@@ -326,7 +346,7 @@ after_bundle do
     gsub_file migration, /:admin/, ":admin, default: false"
   end
 
-  generate("scaffold_controller", "User", "email", "nickname", "first_name", "last_name", "phone_number", "birth_date:date", "gender", "ip_address", "admin:boolean")
+  generate("scaffold_controller", "User", "email", "nickname", "first_name", "last_name", "phone_number", "birth_date:date", "gender", "ip_address", "admin:boolean", "address:string", "latitude:float", "longitude:float")
   gsub_file(
     "config/routes.rb",
     '  resources :users',
@@ -336,7 +356,7 @@ after_bundle do
   # config navigational_formats
   inject_into_file "config/initializers/devise.rb", after: "# config.navigational_formats = ['*/*', :html]" do
     <<-RUBY
-      
+
       config.navigational_formats = ['*/*', :html, :turbo_stream]
     RUBY
   end
